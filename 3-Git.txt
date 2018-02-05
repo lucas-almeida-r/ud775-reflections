@@ -1,0 +1,11 @@
+'ls' - lista os arquivos e pastas de um diretorio
+'ls -a' - inclui os arquivos e pastas ocultas
+
+'git init' - cria um novo repositorio no diretorio que voce está
+
+'git add nome_arquivo' - adiciona o arquivo para o repositorio mas nao cria um commit
+	ele pode adcionar varios arquivos (um de cada vez?) e quando voce quiser 
+	fazer um commit basta faze-lo que será criado um commit que incluirá a adicao de 
+	todos esses arquivos. Essa colocacao temporaria no repositorio sem criar um commit 
+	é chamada de 'Staging Area', caso voce coloque algum arquivo acidentalmente pode-se
+	usar o 'git reset nome_arquivo' para remove-lo da staging area.
