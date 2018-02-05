@@ -1,0 +1,61 @@
+Commits - sao os checkpoints criados pelos usuarios de um determinado 'repositório'
+	cada um corresponde a uma versao do 'repositorio' e cada commit deve ter 
+	uma descrição
+Repositorio - é uma relação de arquivos que tem relação um com o outro e precisam um do 
+	outro para funcionar adequadamente
+
+criar commits por alteração lógica, por exemplo se voce arrumou 3 erros de digitacao
+e depois arrumou um bug, o ideal é fazer 2 commits, para que cada um tenha a sua explicação
+
+git diff older_file newer_file - mostra as alteraçoes incluidas no arquivo mais novo em 
+				comparacao com o arquivo mais velho
+git log - mostra o historico de commits de um repositorio, voce tem que estar nesse repositorio
+	para isso use 'cd' para chegar nesse repositorio (que é uma pasta)
+
+Você está no estado de 'HEAD desanexado'
+HEAD é o que o Git chama de commit no qual você está trabalhando. 
+Você pode “desanexar” o HEAD alternando para um commit anterior, 
+que veremos no próximo vídeo. Apesar do que parece, na verdade 
+não é ruim desanexar o HEAD. O Git só avisa para que você 
+possa perceber o que esta fazendo.
+
+'cd ~' - vai para o diretorio raiz automaticamente
+
+mv 'arquivo_origem' 'arquivo_destino' - usado para mover um arquivo ou renomea-lo (mv = move)
+
+git checkout 'commit id' - restaura algum commit anterior
+
+Git personalizado: (esses passos são para Windows, para mac e linux tem outro video explicando)
+'usuario em roxo' 'diretorio em azul'
+se mudar para um repositorio > 'usuario em roxo' 'commit em verde' 'repositorio em azul'
+	se tiver um asterisco no commit verde quer dizer que o repositorio teve alguma alteração
+	que é diferente do commit mais recente
+git l (+tab) completa o comando e aparece 'git log'
+abrir um editor de texto direto pelo git, por exemplo o Sublime 'git sublime nome_do_arquivo'
+Como personalizar:
+	baixar os arquivos 'git-completion.bash' 'git-prompt.sh' bash_profile_course'
+	e transferi-los para o diretorio raiz (usar comando 'cd ~' para ir para esse diretorio)
+	o ultimo arquivo deve ser renomeado para .bash_profile
+Configuração do editor de texto:
+	escrever: git config --global core.editor "'C:\Program Files\Sublime Text 3\sublime_text.exe' -n -w"
+	o '-n' quer dizer que vai abrir em uma nova janela
+	o '-w' quer dizer que o git vai esperar voce fechar o sublime antes de continuar
+Para criar uma atalho apra chamar o Sublime:
+	vamos fazer uma alteração no '.bash_profile' mas como ele começa com '.' geralmente fica oculto
+	para faze-lo aparecer vamos renomea-lo temporariamente para bash_profile e agora é so adicionar
+	essa linha no final: alias subl="C:\Program Files\Sublime Text 3\sublime_text.exe"
+	agora é so renomear o arquivo de volta, de 'bash_profile' para '.bash_profile'
+
+Depois usa-se mais 2 comandos Git que serão uteis ao longo do curso, mas nao explica o que é
+	talvez mais para frente explique
+Agora é só fechar e reabrir o Git!
+
+
+
+
+
+
+
+
+
+
