@@ -9,3 +9,21 @@
 	todos esses arquivos. Essa colocacao temporaria no repositorio sem criar um commit 
 	é chamada de 'Staging Area', caso voce coloque algum arquivo acidentalmente pode-se
 	usar o 'git reset nome_arquivo' para remove-lo da staging area.
+
+'git diff' sem argumentos - compara os arquivos do working directory e da staging area
+
+'git diff --staged' - compara os arquivos da Staging Area com o commit mais recente,
+		isso é usado antes de criar um novo commit para conferir se o commit 
+		que sera criado está certo
+
+'git reset --hard' - descarta todas as alteracoes no Working Directory e na Staging Area,
+		cuidado ao usar esse comando porque ele nao é reversivel (ja que essas 
+		alteraçoes descartadas nao estao em um commit), o ideal é usar 'git diff' e 
+		'git diff --staged' antes para saber exatamente quais sao essas diferencas 
+		que serao descartadas
+
+Working directory - é o diretorio em si, pastas do sistema operacinal. Quando voce edita 
+		algum arquivo, o Working Directory é o primeiro a ter esses arquivo editado,
+		o passo seguinte seria usar 'git add' para 'copiar' esse arquivo para a 
+		Staging Area e depois usar 'git commit' para salvar um commit
+
