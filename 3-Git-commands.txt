@@ -1,0 +1,2 @@
+link para varios comandos do git:
+https://github.com/github/training-kit/blob/master/downloads/github-git-cheat-sheet.pdf

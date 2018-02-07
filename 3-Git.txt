@@ -27,3 +27,131 @@ Working directory - é o diretorio em si, pastas do sistema operacinal. Quando vo
 		o passo seguinte seria usar 'git add' para 'copiar' esse arquivo para a 
 		Staging Area e depois usar 'git commit' para salvar um commit
 
+BRANCHES - com um unico branch a 'estrutura' dos commits é linear, mas caso a gente precisar 
+	fazer uma outra versao do programa (por exemplo, algo experimental ou outro idioma)
+	podemos criar um 'Branch' em determinado ponto, para criar 'mais de um caminho'
+	-- Cada Branch pode receber um nome (por exemplo 'exp version' , 'italian', ...)
+	-- Master é o nome do branch principal na maioreia dos repositorios e sempre que se cria 
+	um novo repositorio o git o chama de master branch.
+	-- O ultimo commit de um dado branch ('tip of the branch') recebe o nome do branch e 
+	o aviso 'detached HEAD' quer dizer que voce estava olhando para um commit que nao 
+	estava rtulado com o nome do branch
+	-- É possivel dar varios nomes a um commit, e quando voce fizer um novo commit somente 
+	o commit que estava no checkout que vai ser transferido para o novo commit
+	(esse exemplo funciona quando estamos na ponta do branch)
+
+'git branch' - mostra todos os branches, o branch com '*' é o branch que esta checkedout
+
+'git branch novo_branch' - cria um novo branch chamado 'novo_branch'
+
+'git checkout nome-branch' - checks-out para o 'nome-branch'
+
+Branch tambem pode ser usado quando se esta trabalhando com varias pessoas, é comum 
+	quando alguem do grupo vai trabalhar em algo do projeto (bug fix, new feature,...)
+	ela criar um branch para que ela possa ir trabalhando nisso sem que ninguem mexa
+	e depois quando ela tiver acabado, o pessoal transfere o nome 'master' para o 
+	utimo commit dela, ou eles fazem um 'Merge' entre o ultimo commit dela e o master
+
+'git log --graph branch1 branch2 branch3...' - ajuda a visualizar os branches escolhidos
+'git log --graph --oneline branch1 brach2...' - o oneline faz o output sair em uma 
+						linha e ficar mais facil de ler
+
+ACESSIBILIDADE - alguns commits podem ser inacessiveis, o git log consegue rastrear o pai de 
+	um commit, se algum commit tiver 2 'filhos', quando fizermos um checkout em um desses 
+	filhos e depois fizermos um git log, o outro filho nao vai aparecer no log
+
+Para o git os 'branch' sao simplesmente um rótulo para um commit, mas que tem mais acessibilidade
+	por causa do comando 'git branch'
+
+Quando voce faz checkout em um commit mais antigo, aparece uma mensagem de 'detached HEAD'
+	enquanto voce estiver com o checkout nesse commit antigo, se voce fizer um novo
+	commit (commit1), vai criar um outro ramo (nao vai sobreescrever nenhum outro commit) 
+	mas esse ramo nao será um branch e nao terá um nome, caso voce de checkout em algum outro
+	commit, esse commit1 será inacessivel e se ninguem guardou o ID dele entao ele 
+	ninguem vai conseguir voltar nele e sera como se ele nao tivesse existido
+	uma alternativa é nao criar um commit e sim um novo branch quando se esta com checkout
+	em um commit antigo ((na verdade, a 'coleta de lixo' do git roda de vez em quando 
+	e ela pode apagar esses commits inacessiveis, mas isso pode ser desativado ou rodado 
+	pelo comando 'git gc')). Isso é algo muito usado e pode ser feito pelo comando:
+	'git checkout -b new_branch' que é equivalente a rodar os seguintes dois comandos:
+	'git branch new_branch' 'git checkout new_branch'
+
+Merging - é possivel mesclar/juntar 2 commits, isso é bastante usado quando um branch 
+	chegou ao seu objetivo final e agora quremos junta-lo com o master. O git compara 
+	os 2 commits que serao merged com o pai em comum deles. Isso é chamado 
+	'merge branch1 into branch2' se o commit resultante manter o nome branch2, esse commit
+	novo tem 2 pais.
+	-- Ai depois podemos deletar o branch1, como todos os commits serão acessiveis 
+	(ja que o branch2 tem 2 pais), isso que dizer que estaremos apagando somente o nome
+	do branch.
+	-- git log no branch2 vai mostrar os commits dos 2 branches 
+	(branch1 e branch2_antes_do_merge) e vao aparecer do mais recente para o mais antigo
+
+	-- na verdade, o 'git merge branch1 branch2' mantem o branch que estiver no checkout
+	por exemplo se estivermis com branch3 no checkout entao o commit resultante sera
+	branch3 + branch2 + branch1
+	-- depois o merge nao precisamos mais do branch que foi merged podemos apagar usando
+	o comando 'git branch -d branch_name' ('-d' significa 'delete')
+	
+CONFLITO (LINUX/MAC) e WINDOWS 
+	Contexto: sempre que pressionamos a tecla \"Enter\" no teclado, na verdade, 
+	estamos dizendo ao computador para inserir um caractere invisível em nosso arquivo de 
+	texto para indicar ao computador que deve haver uma nova linha. Os sistemas Unix 
+	adicionam um caractere chamado \"line feed\" ou LF ou \n, enquanto os sistemas Windows 
+	adicionam dois caracteres, \"carriage return\" e \"line feed\" ou CRLF ou \r\n.
+
+	Os arquivos de Caroline têm LF porque foram editados no Mac OSX, que usa LF. 
+	Se um usuário do Windows fosse editar os arquivos de Caroline, o editor de texto 
+	do Windows poderia converter todo o LF em CRLF para possibilitar a edição desses arquivos. 
+	Quando o usuário do Windows mesclar o arquivo com os de Caroline, um conflito de 
+	mesclagem ocorrerá, devido aos diferentes caracteres de LF e CRLF.
+
+	Para corrigir isso, os usuários do Windows devem definir o atributo autocrlf 
+	como true: git config --global core.autocrlf true. Mais informações podem ser e
+	ncontradas aqui: https://help.github.com/articles/dealing-with-line-endings/#platform-all
+
+Como depois do Merge o 'git log' mistura os commits de 2 branches, o git diff entre 2 commit ID
+	pode nao fazer sentido, entao para comparar um commit com o seu pai pode-se usar o
+	comando 'git show ID-commit'
+
+CONFLITO durante MERGE
+	As vezes o git merge nao vai saber como mesclar os codigos, entao ele vai mandar um aviso
+	para que os autores dos codigos possam decidir como vai ser o arquivo final
+	por exemplo cada autor inseriu uma funcao diferente logo depois do arquivo original
+	o git nao vai saber como juntar, mas os autores vao conversar e adicionar as 2 novas
+	funções em sequencia uma embaixo da outra.
+	-- O git vai avisar qual arquivo esta com o conflito e inserir alguma linhas nesse arquivo
+	o git divide a regiao em conflito em 3:
+
+	<<<<<<< HEAD
+	.... codigo do checkout atual ....
+	||||||| merged common ancestors
+	.... codigo do pai em comum ....
+	=======
+	.... codigo do 'branch-merged' ....
+	>>>>>>> 'brach-merged'
+	
+	-- para resolver o conflito, primeiro tem que apagar/modificar as linhas de codigo
+	com o conflito e salvar o arquivo. 
+		-Depois, podemos usar git status para ver que os 2 branches estavam 
+		modificando algum arquivo (o aviso 'both modified nome-arquivo').
+		-Depois adicionamos o arquivo com o conflito para a Staging Area ('git add')
+		-Depois se dermos um 'git status' aparecerá um aviso: "conflito foi resolvido, 
+		mas voce ainda está merging, de um git commit para concluir o merge"
+		-Damos um 'git commit', a descrição fa vai vir feita, mas podemos mudar
+		se quisermos.
+
+ATUALIZACAO DE VERSOES ALTERNATIVAS
+	para atualizar um versao alternativa com as atualizacoes realizadas na versao principal
+	devemos dar um checkout na versao alternativa e depois fazer um merge entre essa versao e 
+	a versao principal
+	ex.: 'git checkout easy-version'
+	     'git merge master easy-version'
+
+
+
+Ferramenta para desenhar DIAGRAMAS:
+	gliffy
+	yUML
+
+
