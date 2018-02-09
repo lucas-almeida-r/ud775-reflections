@@ -1,0 +1,18 @@
+'git commit -amend' - abre o editor para editar o comentario do commit mais recente
+
+	caso o commit ja tenha sido pushed, ainda é possivel fazer a alteraçao, mas para atualizar
+	o remote será necessario inserir um '-f' ao final (-forced) 
+	'git push origin master -f' 
+	é preciso tomar cuidado (se estiver trabalhando em conjunto) porque isso muda
+	o ID do commit e pode causar problemas 
+
+	fonte: https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits
+
+adicionar deleção de arquivos:
+	Deleção de arquivos tambem é uma alteração do repositorio, e aparece no 'git status'
+	em vermelho escrito 'deleted'
+	-- inserir '-u' ao final do git add, ex.: 'git add -u' isso vai inserir a deleção do arquivo
+	talvez 'git add arq_deletado -u' insira a deleção de so um dos arquivos.
+	
+	fonte: https://stackoverflow.com/questions/4307728/git-still-showing-deleted-files-after-a-commit
+
