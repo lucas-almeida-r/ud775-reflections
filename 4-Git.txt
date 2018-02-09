@@ -1,0 +1,102 @@
+O para enviarmos nosso repositorio local para o github, geralmente enviamos o branch
+	podemos dar um 'push' em um dado branch, e todos os commits desse branch 
+	vao para o repositorio no github
+
+Primeiro temos que criar um repositorio vazio no github, caso nao tivessemos um repositorio
+	no git, seria interessante ativar a opção 'inicializar com um readme.txt', porque
+	assim poderiamos clonar pelo git (nao é possivel clonar um repositorio do github
+	sem nenhum commit)
+
+Depois temos que adicionar esse repositorio vazio como um 'remote' do repositorio que
+	esta no nosso computador
+
+'git remote' - mostra todos os remotes do repositorio
+
+'git remote add nome-remote url' - cria um nome que sera usado localmente para se referir ao
+	repositorio no github. Se tiver somente um remote por padrao chamam esse remote 
+	de 'origin'. A url é fornecida pelo site do github na pagina do repositorio vazio.
+
+'git remote -v' - mostra a url do remote, a que voce pega dados e a que voce poe dados
+	geralemente essas 2 url sao iguais
+
+
+'git pull remote-name branch-name-in-remote' - pega os commits do branch 'branch-name-in-remote'
+	do remote 'remote-name' (esse branch é o nome do branch que está no repositorio remote
+	nao precisa ser igual o nome do branch que esta no repositorio local, mas geralmente
+	eles sao iguais)
+
+FORK - é usado para copiar um repositorio do github do usuarioA para o usuarioB, na pagina
+	do usuarioB aparecerá a fonte (usuarioA), mas o usuarioB pode modificar como ele quiser
+	basta editar pelo site ou dar um 'git clone' para um repositorio local.
+	-- uma forma mais trabalhosa seria dar um clone no remote do usuarioA, e criar um 
+	remote na conta do usuarioB e dar um push do repositorio local para o remote, mas 
+	dessa forma nao se faz nenhuma referencia ao autor original do repositorio (usuarioA)
+
+'git push remote-name branch-name' - esse comando envia os commits do branch local
+	para o remote
+
+Tambem é possivel criar/editar arquivos no site do github e depois importar essas modificacoes
+	para seu repositorio local. A modificacao no remote sem modificar o repositorio local
+	pode ser por causa da edicao pelo site ou pela atualizacao do remote por uma outra pessoa
+	que tambem esta trabalhando no mesmo projeto
+
+ORIGIN/MASTER, MASTER
+	quando damos um 'git log' as vezes aparece um 'origin/master' em algum commit,
+	isso quer dizer que no repositorio remote (origin), aquele commit é o master
+	isso é uma forma de mostrar ate onde ele estava atualizado (mas essa informacao 
+	pode estar desatualizada, ja que o git funciona basicamente offline e essa informacao
+	é atualizada quando nos comunicamos com o github, por exemplo dando um push ou um pull)
+	'git pull origin master' = 'git fetch origin'
+				   'git merge master origin/master'
+
+PUSH e PULL CONFLICTS
+	é possivel que ao fazer o push ou o pull, ja exista algum commit em posicao equivalente
+	ex.: local: a-b-c-x remote: a-b-c-y , supondo que eu queira dar um push para adicionar
+	o commit 'x', o git vai tentar dar um merge entre x e y e isso pode gerar algum conflito
+	-- suponha que queiramos dar um pull, se dermos um pull o gt vai tentar dar um merge
+	entre x e y, se dermos um 'git fetch' o git vai criar um ramo e vai manter x e y
+	x com nome de master e y com nome de origin/master, se depois dermos um merge 
+	entre x e y, teremos feito o que o comando pull faria
+
+FAST-FORWARD MERGE
+	quando se tenta fazer um merge entre 2 commits em que um deles é pai do outro
+	o git faz um fast-forward merge, na prática ele só move o rótulo de um commit para
+	a posicao do outro commit.
+	-- isso geralmente acontece quando damos um pull/push tradicional
+	ex.: pull - local: a-b-c  remote: a-b-c-d-e
+	ex.: push - local: a-b-c-d  remote: a-b
+
+Opiniao sobre mudanças - PULL REQUEST
+	caso façamos alguma mudança no repositorio e queremos a opiniao do outros colaboradores
+	podemos fazer essa mudanca e salvá-la em um branch diferente, dar um push e depois
+	se todos concordarem podemos dar um merge entre essa mudanca e o master
+	-- para isso existe o PULL REQUEST, depois de criar esse novo branch, podemos ir no 
+	site do github e clicar em 'pull request', e podemos dizer com qual branch esse novo
+	branch deveria ser merged. O github vai mandar um email para os colaboradores do
+	repositorio avisando da requisicao.
+
+Se fizermos o merge pelo botao disponivel no site (dentro da parte de pull request), o github
+	cria automaticamente um novo commit. mesmo se 1 dos commits era pai do outro (o que
+	o merge pelo git, faria como um fast-forward merge)
+
+MAIS DE 1 PULL REQUEST
+	vamos supor que tenhamos 2 pull requests(more-oil e corn-oil), e aceitamos o more-oil 
+	requests e damos merge pelo site e apagamos o branch more-oil,
+	entao criamos um novo commit que é master + 'more-oil'
+	Caso o request corn-oil tenha que ser revisado(algum erro ou conflito com o master),
+	o autor do corn-oil deve, dar um pull
+	para atualizar o master com o more-oil, e para realizar outra pull request atualizada, 
+	ele deve fazer um merge do master para o corn-oil (mantendo intacto o master) e realizar
+	de novo o pull request, se estiver tudo certo alguem vai aceitar o merge e clicar 
+	no botao de merge dentro do site do github
+
+existem outras ferramentas parecidas com o GitHub, por exemplo o BitBucket que permite
+	a criação de repositorios privados de graça (para até 5 usuarios utilizarem)
+
+
+
+
+
+
+
+
