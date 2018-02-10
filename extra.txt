@@ -269,6 +269,92 @@ RELATIVE COMMIT REFERENCES
 	https://git-scm.com/blog
 	https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#Ancestry-References
 
+GIT LOG FILTRO
+	'git shortlog' - mostra o autor e seus commits
+	'git shortlog -s -n' - mostra o numero de commits de cada autor (-s) e poe em ordem 
+				de numero de commits (-n)
+	'git log --author="Lucas Rocha"' - exibe apenas os commits do autor "Lucas Rocha"
+	'git log --grep=bug' - exibe apenas os commits que contem a palavra 'bug' em sua 
+				mensagem ou na descricao do commit
 
+WATCHING A REPOSITORY
+	If you're working on a repository quite often, then I'd suggest setting the 
+	watch setting to "Watching". This way GitHub will notify you whenever anything 
+	happens with the repository like people pushing changes to the repository, 
+	new issues being created, or comments being added to existing issues.
 
+FORK REMOTE and ORIGINAL REMOTE
+	Vamos supor que enquando estamos trabalhando em nosso fork remote para fazer
+	alguma contribuição para o remote original, o orignal recebe varios commits no master.
+	Para atualizar o master do nosso fork e do nosso repo local, devemos criar um 2 remote
+	pelo git, o remote que se refere ao original remote geralmente é chamado de 'upstream'
+	entao rodamos o comando 'git remote add upstream URL-original-remote' assim quando 
+	executamos 'git remote -v' veremos o 'origin' e o 'upstream'
+	-- Agora basta dar um 'git pull upstream master' (ou git fetch, mas ai teremos que dar 
+	um merge depois) para atualizar o master de nosso repo local e 
+	depois um 'git push origin master' para atualizar o nosso fork
+
+RENAME REMOTE
+	'git remote rename nome-antigo nome-novo' - renomeia um remote chamado nome-antigo para
+						o nome nome-novo
+
+JUNTAR VÁRIOS COMMITS EM 1 ('squashing')
+	vamos supor que temos os seguintes commits: a-b-c-d-e-f-g(master , head)
+	e que os commits e,f,g foram somente correcao de erro de portugues
+	então juntar (squash) esses commits em 1 só deixaria o git log mais limpo.
+	para fazer isso rodamos 'git rebase -i HEAD~3' para juntar os 3 ultimos commits
+	(o comando faz referencia a um quarto commit mas ele nao será incluido na junção)
+	Após o comando teremos os seguintes commits a-b-c-d-h(master , head)
+	                                                   \e-f-g
+	os commits e,f,g ainda existirão mas como nao sao acessiveis por nenhum branch (nesse 
+	caso o unico branch é o master), eles serão eventualmente apagados pelo git
+	-- se quisermos podemos criar um backup desses commits, para isso basta criar um branch
+	(chamado 'backup' por exemplo) antes de rodar o 'git rebase -i HEAD~3'
+	nesse caso teriamos inicialmente a-b-c-d-e-f-g(master/head  ,  backup)
+	e após a junção (squashing) teriamos a-b-c-d-h (master/head)
+	                                \e-f-g (backup)
+
+	'-i' quer dizer que sera de forma iterativa, que é melhor para iniciantes
+	-- depois de fazer o squash (sem o backup), se quisermos fazer um push para atualizar um remote
+	teremos que fazer um 'git push -f', porque o git vai saber que esse push pode
+	apagar commits e se nao tiver o '-f', ele nao vai deixar o push rodar
+
+REBASE COMMANDS
+	Let's take another look at the different commands that you can do with git rebase:
+
+	use p or pick – to keep the commit as is
+	use r or reword – to keep the commit's content but alter the commit message
+	use e or edit – to keep the commit's content but stop before committing so that you can:
+			add new content or files
+			remove content or files
+			alter the content that was going to be committed
+	use s or squash – to combine this commit's changes into the previous commit 
+			(the commit above it in the list)
+	use f or fixup – to combine this commit's change into the previous one 
+			but drop the commit message
+	use x or exec – to run a shell command
+	use d or drop – to delete the commit
+
+QUANDO USAR REBASE - PERIGOS DO REBASE
+	As you've seen, the git rebase command is incredibly powerful. It can help you 
+	edit commit messages, reorder commits, combine commits, etc. So it truly is a 
+	powerhouse of a tool. Now the question becomes "When should you rebase?".
+
+	Whenever you rebase commits, Git will create a new SHA for each commit! This has drastic 
+	implications. To Git, the SHA is the identifier for a commit, so a different 
+	identifier means it's a different commit, regardless if the content has changed at all.
+
+	So you should not rebase if you have already pushed the commits you want to rebase. 
+	If you're collaborating with other developers, then they might already be working 
+	with the commits you've pushed. If you then use git rebase to change things around 
+	and then force push the commits, then the other developers will now be out of sync 
+	with the remote repository. They will have to do some complicated surgery to 
+	their Git repository to get their repo back in a working state...and it might not 
+	even be possible for them to do that; they might just have to scrap all of their 
+	work and start over with your newly-rebased, force-pushed commits.
+
+	mais detalhes sobre git rebase:
+	https://git-scm.com/book/en/v2/Git-Branching-Rebasing
+	https://git-scm.com/docs/git-rebase
+	https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase
 
