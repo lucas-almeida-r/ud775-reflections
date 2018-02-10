@@ -358,3 +358,13 @@ QUANDO USAR REBASE - PERIGOS DO REBASE
 	https://git-scm.com/docs/git-rebase
 	https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase
 
+FIRST COLLABORATION - PULL REQUEST
+	alguns sites tem trabalhos relativamente faceis para quem nunca colaborou
+	em um projeto aberto
+	https://github.com/search?utf8=%E2%9C%93&q=label%3Afirst-timers-only+is%3Aopen&type=Issues&ref=searchresults
+	(search for label:first-timers-only is:open)
+	https://blog.kentcdodds.com/first-timers-only-78281ea47455
+	http://up-for-grabs.net/#/
+	http://www.firsttimersonly.com/
+	para ver a pull request de algum usuario do github:
+	http://firstpr.me/
